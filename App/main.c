@@ -23,13 +23,13 @@
 #define nrf_yaokongqi    0
 
 /*调用即软件复位,有可能用得上*/
-#define NVIC_SystemReset()    {  
-             __DSB();          /* Ensure all outstanding memory accesses includedbuffered write are completed before reset */
-             SCB_AIRCR  = ((0x5FA << SCB_AIRCR_VECTKEY_SHIFT)      |
-             SCB_AIRCR_SYSRESETREQ_MASK);
-             __DSB();                                                     /* Ensure completion of memory access */
-             while(1);                                                    /* wait until reset */ 
-             }
+//#define NVIC_SystemReset()    {
+//             __DSB();          /* Ensure all outstanding memory accesses includedbuffered write are completed before reset */
+//             SCB_AIRCR  = ((0x5FA << SCB_AIRCR_VECTKEY_SHIFT)      |
+//             SCB_AIRCR_SYSRESETREQ_MASK);
+//             __DSB();                                                     /* Ensure completion of memory access */
+//             while(1);                                                    /* wait until reset */
+//             }
 
 
 //摄像头相关变量
@@ -190,17 +190,18 @@ void uart3_handler(void)
 		else if(ch==0x02)           //后
 		{
 		    car_stop_count++;
-			if(car_stop_count>=1&&auto_car_flag==1)
+			car_begin_count=0;
+			if(car_stop_count>=1&&hand_car_flag==1)
+			{
+                back_step=1;
+				car_stop_count=0;
+			}
+			else if(car_stop_count>=1&&auto_car_flag==1)
 			{
                Speed_protect=1;                  //停车   并转入手动模式
                car_stop_count=0;
                hand_car_flag=1;
 			   auto_car_flag=0;
-			}
-			else if(car_stop_count>=1&&hand_car_flag==1)
-			{
-                back_step=1;
-				car_stop_count=0;
 			}
 			else
 			{}

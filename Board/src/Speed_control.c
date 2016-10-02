@@ -282,10 +282,20 @@ void SpeedControlOutput(void)
 	}
 	if(hand_car_flag==1)            //手动模式
 	{
-        if(forward_step==1)            //向前进一小段
+	    if(Speed_protect==1)           //由自动变为手动时的停车方案
+	    {
+	        step_count++;
+            Motor_control(-3000);
+			if(step_count>=10)       //这个有待修改!!!!
+			{
+                Speed_protect=0;
+				step_count=0;
+			}
+		}
+        else if(forward_step==1)            //向前进一小段
         {
             step_count++;
-			if(step_count<=50)
+			if(step_count<=20)     //这个有待修改!!!!
 			{
                 Motor_control(2500);
 			}
@@ -300,7 +310,7 @@ void SpeedControlOutput(void)
 		else if(back_step==1)              //向后退一小段
         {
             step_count++;
-			if(step_count<=50)
+			if(step_count<=20)    //这个有待修改!!!!
 			{
                 Motor_control(-2500);
 			}

@@ -275,24 +275,24 @@ void DJ_PID(void)
 
 
 	/*自动驾驶还是手动驾驶*/
-    static uint32 the_last_duty;
-	the_last_duty=SE_duty;
+    static int32 the_last_duty;
     if(auto_car_flag==1)
     {
-        SE_duty=SE_duty;
+        the_last_duty=SE_duty;
 	}
 	else    //手动驾驶
 	{
         if(left_step==1)
         {
-            SE_duty=the_last_duty+2000;
+            the_last_duty-=2000;
 			left_step=0;
 		}
         if(right_step==1)
         {
-            SE_duty=the_last_duty-2000;
+            the_last_duty+=2000; 
 			right_step=0;
 		}		
+		SE_duty=the_last_duty;
 	}
 	
 		
