@@ -1,0 +1,8 @@
+/Lib/
+/Prj/
+/settings/
+*.txt
+*.zip
+*.bat
+*.url
+vcan_kinetis.eww
